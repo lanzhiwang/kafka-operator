@@ -5072,8 +5072,9 @@ spec:
                 status
               type: string
             listenerStatuses:
-              description: ListenerStatuses defines the internal and external listener
-                addresses
+              description: ListenerStatuses holds information about the statuses of
+                the configured listeners. The internal and external listeners are
+                stored in separate maps, and each listener can be looked up by name.
               properties:
                 externalListeners:
                   additionalProperties:
@@ -5083,13 +5084,12 @@ spec:
                       host:
                         type: string
                       port:
-                        type: string
+                        format: int32
+                        type: integer
                     required:
                     - host
                     - port
                     type: object
-                  description: ListenerStatus objects can be looked up in ListenerStatusMap
-                    by listener name
                   type: object
                 internalListeners:
                   additionalProperties:
@@ -5099,13 +5099,12 @@ spec:
                       host:
                         type: string
                       port:
-                        type: string
+                        format: int32
+                        type: integer
                     required:
                     - host
                     - port
                     type: object
-                  description: ListenerStatus objects can be looked up in ListenerStatusMap
-                    by listener name
                   type: object
               type: object
             rollingUpgradeStatus:

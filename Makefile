@@ -1,14 +1,22 @@
 # Image URL to use all building/pushing image targets
 TAG ?= $(shell git describe --tags --abbrev=0 2>/dev/null )
+# TAG=0.5.3
+
 IMG ?= banzaicloud/kafka-operator:$(TAG)
+# IMG=banzaicloud/kafka-operator:0.5.3
 
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
 CRD_OPTIONS ?= "crd:trivialVersions=true"
+# CRD_OPTIONS=crd:trivialVersions=true
 
 RELEASE_TYPE ?= p
+# RELEASE_TYPE=p
+
 RELEASE_MSG ?= "operator release"
+# RELEASE_MSG=operator release
 
 REL_TAG = $(shell ./scripts/increment_version.sh -${RELEASE_TYPE} ${TAG})
+# ./scripts/increment_version.sh -p 0.5.3
 
 GO111MODULE=on
 GOLANGCI_VERSION = 1.17.1
@@ -20,8 +28,10 @@ GOBIN=$(shell go env GOPATH)/bin
 else
 GOBIN=$(shell go env GOBIN)
 endif
+# GOBIN=/Users/huzhi/go/bin
 
 export PATH := $(PWD)/bin:$(PATH)
+# /Users/huzhi/work/code/go_code/kafka-operator/bin
 
 all: test manager
 
@@ -66,6 +76,15 @@ install-kubebuilder:
 	@ if ! which bin/kubebuilder/bin/kubebuilder &>/dev/null; then\
 		scripts/install_kubebuilder.sh;\
 	fi
+# $ ll bin/kubebuilder/bin/
+# total 553024
+# drwxr-xr-x  6 huzhi  staff        192  1  9 21:06 ./
+# drwxr-xr-x  3 huzhi  staff         96  1  9 21:06 ../
+# -rwxr-xr-x  1 huzhi  staff   33331472  5 16  2019 etcd*
+# -rwxr-xr-x  1 huzhi  staff  186695000  5 16  2019 kube-apiserver*
+# -rwxr-xr-x  1 huzhi  staff   14402704  8 16  2019 kubebuilder*
+# -rwxr-xr-x  1 huzhi  staff   48710920  5 16  2019 kubectl*
+# $
 
 # Run tests
 test: install-kubebuilder generate fmt vet manifests
@@ -121,6 +140,7 @@ CONTROLLER_GEN=$(GOBIN)/controller-gen
 else
 CONTROLLER_GEN=$(shell which controller-gen)
 endif
+# CONTROLLER_GEN=/Users/huzhi/go/bin/controller-gen
 
 check_release:
 	@echo "A new tag (${REL_TAG}) will be pushed to Github, and a new Docker image will be released. Are you sure? [y/N] " && read ans && [ $${ans:-N} == y ]
@@ -129,3 +149,13 @@ release: check_release
 	git tag -a ${REL_TAG} -m ${RELEASE_MSG}
 	git push origin ${REL_TAG}
 
+debug:
+	$(warning $@)
+	@pwd
+	@echo TAG=$(TAG)
+	@echo IMG=$(IMG)
+	@echo CRD_OPTIONS=$(CRD_OPTIONS)
+	@echo RELEASE_TYPE=$(RELEASE_TYPE)
+	@echo RELEASE_MSG=$(RELEASE_MSG)
+	@echo REL_TAG=$(REL_TAG)
+	@echo GOBIN=$(GOBIN)

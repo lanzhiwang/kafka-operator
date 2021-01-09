@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 while getopts ":Mmp" opt; do
   case $opt in
@@ -13,6 +14,8 @@ while getopts ":Mmp" opt; do
       ;;
   esac
 done
+# relType=patch
+
 
 if [ -z $relType ]; then
   echo "usage: $(basename $0) [-Mmp] major.minor.patch"
@@ -25,7 +28,12 @@ if [ -z $2 ]; then
 fi
 
 version=$2
+# version=0.5.3
+
 parts=( ${version//./ } )
+# echo ${parts[0]}  # 0
+# echo ${parts[1]}  # 5
+# echo ${parts[2]}  # 3
 
 if [ $relType == "major" ]; then
   ((parts[0]++))
@@ -43,3 +51,4 @@ if [ $relType == "patch" ]; then
 fi
 
 echo "${parts[0]}.${parts[1]}.${parts[2]}"
+# 0.5.4

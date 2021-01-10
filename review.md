@@ -125,6 +125,27 @@ pkg
 12 directories, 32 files
 $
 
+
+#######################################
+
+package main
+
+import (
+	"github.com/banzaicloud/kafka-operator/api/v1alpha1"
+	"github.com/banzaicloud/kafka-operator/controllers"
+		"github.com/banzaicloud/kafka-operator/api/v1alpha1"
+		"github.com/banzaicloud/kafka-operator/pkg/resources"
+			"github.com/banzaicloud/kafka-operator/api/v1alpha1"
+		"github.com/banzaicloud/kafka-operator/pkg/resources/cruisecontrol"
+		"github.com/banzaicloud/kafka-operator/pkg/resources/cruisecontrolmonitoring"
+		"github.com/banzaicloud/kafka-operator/pkg/resources/envoy"
+		"github.com/banzaicloud/kafka-operator/pkg/resources/kafka"
+		"github.com/banzaicloud/kafka-operator/pkg/resources/kafkamonitoring"
+		"github.com/banzaicloud/kafka-operator/internal/alertmanager"
+
+
+)
+
 ```
 
 
